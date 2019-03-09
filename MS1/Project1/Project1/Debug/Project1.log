@@ -1,4 +1,0 @@
-﻿  Source.cpp
-c:\users\adams\source\repos\github\oop-project-local\ms1\project1\project1\source.cpp(83): warning C4172: returning address of local variable or temporary: tmp
-c:\users\adams\source\repos\github\oop-project-local\ms1\project1\project1\source.cpp(92): warning C4172: returning address of local variable or temporary: tmp
-  Project1.vcxproj -> C:\Users\adams\source\repos\GitHub\OOP-Project-Local\MS1\Project1\Debug\Project1.exe

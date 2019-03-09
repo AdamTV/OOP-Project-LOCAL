@@ -55,15 +55,15 @@ bool milestone1()
 	printTestHeader("T1. Constants");
 	cout << "| T1.1. Checking that the constants are defined." << endl;
 	::printBar();
-	::printLabel("Min Year: ")          << ama::min_year << endl;
-	::printLabel("Min Year: ")          << ama::min_year << endl;
-	::printLabel("Max Year: ")          << ama::max_year << endl;
-	::printLabel("No Error: ")          << ama::no_error << endl;
-	::printLabel("Year Error: ")        << ama::error_year << endl;
-	::printLabel("Month Error: ")       << ama::error_mon << endl;
-	::printLabel("Day Error: ")         << ama::error_day << endl;
+	::printLabel("Min Year: ") << ama::min_year << endl;
+	::printLabel("Min Year: ") << ama::min_year << endl;
+	::printLabel("Max Year: ") << ama::max_year << endl;
+	::printLabel("No Error: ") << ama::no_error << endl;
+	::printLabel("Year Error: ") << ama::error_year << endl;
+	::printLabel("Month Error: ") << ama::error_mon << endl;
+	::printLabel("Day Error: ") << ama::error_day << endl;
 	::printLabel("Invalid Operation: ") << ama::error_invalid_operation << endl;
-	::printLabel("Input Error: ")       << ama::error_input << endl;
+	::printLabel("Input Error: ") << ama::error_input << endl;
 	::printBar();
 
 	// Test 2: Default Constructor
@@ -90,8 +90,8 @@ bool milestone1()
 		::printBar();
 		::printLabel("Date::operator==(...): ") << (aDate == anotherDate) << endl;
 		::printLabel("Date::operator!=(...): ") << (aDate != anotherDate) << endl;
-		::printLabel("Date::operator<(...): ")  << (aDate >  anotherDate) << endl;
-		::printLabel("Date::operator>(...): ")  << (aDate <  anotherDate) << endl;
+		::printLabel("Date::operator<(...): ") << (aDate < anotherDate) << endl;
+		::printLabel("Date::operator>(...): ") << (aDate > anotherDate) << endl;
 		::printLabel("Date::operator<=(...): ") << (aDate <= anotherDate) << endl;
 		::printLabel("Date::operator>=(...): ") << (aDate >= anotherDate) << endl;
 		::printBar();
@@ -369,9 +369,9 @@ bool milestone1()
 int main()
 {
 	milestone1();
-//	milestone2();
-//	milestone3();
-//	milestone4();
-//	milestone5();
+	//	milestone2();
+	//	milestone3();
+	//	milestone4();
+	//	milestone5();
 	return 0;
 }
