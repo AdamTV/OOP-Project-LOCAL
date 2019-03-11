@@ -1,0 +1,6 @@
+﻿  Date.cpp
+  ms1.cpp
+  Generating Code...
+c:\users\adams\source\repos\github\oop-project-local\ms1\date.cpp(83): warning C4172: returning address of local variable or temporary: tmp
+c:\users\adams\source\repos\github\oop-project-local\ms1\date.cpp(92): warning C4172: returning address of local variable or temporary: tmp
+  ms1.vcxproj -> C:\Users\adams\source\repos\GitHub\OOP-Project-LOCAL\MS1\ms1\Debug\ms1.exe

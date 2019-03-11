@@ -4,7 +4,7 @@
 // Course:		OOP244 Winter 2019
 // File:		Date.cpp
 
-#include "Header.h"
+#include "Date.h"
 
 namespace ama {
 	void Date::status(int newStatus) {

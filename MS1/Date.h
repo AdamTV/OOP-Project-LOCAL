@@ -5,7 +5,7 @@
 // File:		Date.h
 #ifndef AMA_DATE_H
 #define AMA_DATE_H
-#endif
+
 #include <iostream>
 using namespace std;
 namespace ama {
@@ -37,3 +37,5 @@ namespace ama {
 	ostream& operator<<(ostream& os, const Date& rhs);
 	istream& operator>>(istream& is, Date& rhs);
 }
+
+#endif

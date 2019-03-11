@@ -90,8 +90,8 @@ bool milestone1()
 		::printBar();
 		::printLabel("Date::operator==(...): ") << (aDate == anotherDate) << endl;
 		::printLabel("Date::operator!=(...): ") << (aDate != anotherDate) << endl;
-		::printLabel("Date::operator<(...): ") << (aDate < anotherDate) << endl;
-		::printLabel("Date::operator>(...): ") << (aDate > anotherDate) << endl;
+		::printLabel("Date::operator<(...): ") << (aDate > anotherDate) << endl;
+		::printLabel("Date::operator>(...): ") << (aDate < anotherDate) << endl;
 		::printLabel("Date::operator<=(...): ") << (aDate <= anotherDate) << endl;
 		::printLabel("Date::operator>=(...): ") << (aDate >= anotherDate) << endl;
 		::printBar();
