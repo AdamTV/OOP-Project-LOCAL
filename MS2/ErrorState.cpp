@@ -27,17 +27,20 @@ namespace ama {
 		currentMessage = nullptr;
 	}
 	ErrorState::operator bool() const {
-		bool check = false;
+		bool check = true;
 		if (currentMessage == nullptr || currentMessage[0] == '\0')
-			check = true;
+			check = false;
 		return check;
 	}
 	ErrorState& ErrorState::operator=(const char * pText) {
 		ErrorState temp(pText);
-		if (!temp) {
+		if (temp) {
 			delete[] currentMessage;
 			this->currentMessage = temp.currentMessage;
 			temp.currentMessage = nullptr;
+		}
+		else {
+			currentMessage = nullptr;
 		}
 		return *this;
 	}
