@@ -9,8 +9,7 @@
 
 namespace ama {
 	class ErrorState {
-		const char * currentMessage;
-		//std::ostream& write(std::ostream& os) const;
+		char * currentMessage;
 	public:
 		explicit ErrorState(const char* errorMessage = nullptr);
 		ErrorState(const ErrorState& other) = delete;

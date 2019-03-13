@@ -1,2 +1,3 @@
 ﻿  ErrorState.cpp
-  ms2.vcxproj -> C:\Users\adams\source\repos\GitHub\OOP-Project-LOCAL\MS2\ms2\Debug\ms2.exe
+c:\users\adams\source\repos\github\oop-project-local\oop-project-local\ms2\errorstate.cpp(25): warning C4717: 'ama::ErrorState::ErrorState': recursive on all control paths, function will cause runtime stack overflow
+  ms2.vcxproj -> C:\Users\adams\source\repos\GitHub\OOP-Project-Local\OOP-Project-LOCAL\MS2\ms2\Debug\ms2.exe

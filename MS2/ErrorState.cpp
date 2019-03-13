@@ -12,13 +12,14 @@ using namespace std;
 
 namespace ama {
 	ErrorState::ErrorState(const char* errorMessage) {
-		currentMessage = errorMessage;
-		if (*this) {
-			currentMessage = nullptr;
+		
+		if (errorMessage != nullptr && errorMessage[0] != '\0') {
+			currentMessage = new char[strlen(errorMessage) + 1];
+			strncpy(currentMessage, errorMessage, strlen(errorMessage));
+			currentMessage[strlen(errorMessage)] = '\0';
 		}
 		else {
-			currentMessage = new const char[strlen(errorMessage)];
-			strncpy((char*)currentMessage, errorMessage, strlen(errorMessage));
+			currentMessage = nullptr;
 		}
 	}
 	ErrorState::~ErrorState() {
@@ -46,11 +47,6 @@ namespace ama {
 	const char * ErrorState::message() const {
 		return currentMessage;
 	}
-	/*ostream& ErrorState::write(ostream& os) const {
-		if (!*this)
-			os << currentMessage;
-		return os;
-	}*/
 	ostream& operator<<(ostream& os,const ErrorState& rhs) {
 		const char* msg = rhs.message();
 		if(msg)
