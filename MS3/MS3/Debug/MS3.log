@@ -1,0 +1,4 @@
+﻿  Product.cpp
+c:\users\adams\source\repos\github\oop-project-local\ms3\product.cpp(106): warning C4806: '==': unsafe operation: no value of type 'bool' promoted to type 'char' can equal the given constant
+c:\users\adams\source\repos\github\oop-project-local\ms3\product.cpp(162): warning C4806: '==': unsafe operation: no value of type 'const bool' promoted to type 'char' can equal the given constant
+  MS3.vcxproj -> C:\Users\adams\source\repos\GitHub\OOP-Project-LOCAL\MS3\MS3\Debug\MS3.exe
