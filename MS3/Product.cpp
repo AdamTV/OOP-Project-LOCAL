@@ -26,7 +26,6 @@ namespace ama {
 			this->ErrorState::message(nullptr);
 		}
 		else {
-			delete[] name;
 			int len = strlen(name_n);
 			name = new char[len + 1];
 			strncpy(name, name_n, len);
@@ -44,7 +43,17 @@ namespace ama {
 	}
 	Product& Product::operator=(const Product& src) {
 		if (this != &src) {
-			*this = Product(src.sku, src.name, src.unit, src.costBeforeTax, src.qtyNeed, src.qtyAvail, src.taxable);
+			strncpy(sku, src.sku, max_length_sku);
+			strncpy(unit, src.unit, max_length_unit);
+			costBeforeTax = src.costBeforeTax;
+			qtyNeed = src.qtyNeed, qtyAvail = src.qtyAvail;
+			taxable = src.taxable;
+			//*this = Product(src.sku, src.name, src.unit, src.costBeforeTax, src.qtyNeed, src.qtyAvail, src.taxable);
+			delete[] name;
+			int len = strlen(src.name);
+			name = new char[len + 1];
+			strncpy(name, src.name, len);
+			name[len] = '\0';
 		}
 		return *this;
 	}
@@ -87,23 +96,33 @@ namespace ama {
 		return !*this;
 	}
 	std::istream& Product::read(std::istream& in, bool interractive) {
+		char sku_n[max_length_sku + 1];
+		char unit_n[max_length_unit + 1];
+		char name_n[max_name_length];
+		int qtyAvail_n, qtyNeed_n;
+		double costBeforeTax_n, costAfterTax_n;
+		bool taxable_n;
 		if (!interractive) {
-			in >> sku; in.ignore(); in >> name; in.ignore(); in >> unit; in.ignore(); in >> costBeforeTax;
-			in.ignore(); in >> taxable; in.ignore(); in >> qtyAvail; in.ignore(); in >> qtyNeed; in.ignore();
+			in >> sku_n;
+			in.ignore();
+			in >> name_n;
+			in.ignore();
+			in >> unit_n; in.ignore(); in >> costBeforeTax_n;
+			in.ignore(); in >> taxable_n; in.ignore(); in >> qtyAvail_n; in.ignore(); in >> qtyNeed_n; in.ignore();
 		}
 		if (interractive) {
 
 			bool check = true;
 			in.setf(std::ios::right);
 			in.width(max_length_label);
-			std::cout << "Sku: "; std::cin >> sku;
+			std::cout << "Sku: "; std::cin >> sku_n;
 			in.width(max_length_label);
-			std::cout << "Name (no spaces): "; std::cin >> name;
+			std::cout << "Name (no spaces): "; std::cin >> name_n;
 			in.width(max_length_label);
-			std::cout << "Unit: "; std::cin >> unit;
+			std::cout << "Unit: "; std::cin >> unit_n;
 			in.width(max_length_label);
-			std::cout << "Taxed? (y/n): "; std::cin >> taxable;
-			if (taxable == 'Y' || taxable == 'y' || taxable == 'N' || taxable == 'n')
+			std::cout << "Taxed? (y/n): "; std::cin >> taxable_n;
+			if (taxable_n == 'Y' || taxable_n == 'y' || taxable_n == 'N' || taxable_n == 'n')
 				check = true;
 			else {
 				check = false;
@@ -112,7 +131,7 @@ namespace ama {
 			}
 			if (check) {
 				in.width(max_length_label);
-				std::cout << "Price: "; std::cin >> costBeforeTax;
+				std::cout << "Price: "; std::cin >> costBeforeTax_n;
 				if (in.fail()) {
 					check = false;
 					in.setstate(std::ios::failbit);
@@ -120,16 +139,16 @@ namespace ama {
 				}
 				if (check) {
 					in.width(max_length_label);
-					std::cout << "Quantity on Hand: "; std::cin >> qtyAvail;
-					if (in.fail() || qtyAvail < 1) {
+					std::cout << "Quantity on Hand: "; std::cin >> qtyAvail_n;
+					if (in.fail() || qtyAvail_n < 1) {
 						check = false;
 						in.setstate(std::ios::failbit);
 						this->ErrorState::message("Invalid Quantity Available Entry!");
 					}
 					if (check) {
 						in.width(max_length_label);
-						std::cout << "Quantity needed: "; std::cin >> qtyNeed;
-						if (in.fail() || qtyNeed < 1) {
+						std::cout << "Quantity needed: "; std::cin >> qtyNeed_n;
+						if (in.fail() || qtyNeed_n < 1) {
 							check = false;
 							in.setstate(std::ios::failbit);
 							this->ErrorState::message("Invalid Quantity Needed Entry!");
