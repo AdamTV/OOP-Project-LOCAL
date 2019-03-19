@@ -101,13 +101,13 @@ namespace ama {
 		char name_n[max_name_length];
 		int qtyAvail_n, qtyNeed_n;
 		double costBeforeTax_n, costAfterTax_n;
-		bool taxable_n;
+		char taxable_n;
 		if (!interractive) {
-			in >> sku_n;
+			in.get(sku_n, max_length_sku, ',');
 			in.ignore();
-			in >> name_n;
+			in.get(name_n, max_name_length, ',');
 			in.ignore();
-			in >> unit_n; in.ignore(); in >> costBeforeTax_n;
+			in.get(unit_n, max_length_unit, ','); in.ignore(); in >> costBeforeTax_n; in.ignore();
 			in.ignore(); in >> taxable_n; in.ignore(); in >> qtyAvail_n; in.ignore(); in >> qtyNeed_n; in.ignore();
 		}
 		if (interractive) {
@@ -127,7 +127,7 @@ namespace ama {
 			else {
 				check = false;
 				in.setstate(std::ios::failbit);
-				message("Only (Y)es or (N)o are acceptable!");
+				this->ErrorState::message("Only (Y)es or (N)o are acceptable!");
 			}
 			if (check) {
 				in.width(max_length_label);
