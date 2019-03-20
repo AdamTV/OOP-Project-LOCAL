@@ -113,14 +113,14 @@ namespace ama {
 		if (interractive) {
 
 			bool check = true;
-			in.setf(std::ios::right);
-			in.width(max_length_label);
+			std::cout.setf(std::ios::right);
+			std::cout.width(max_length_label);
 			std::cout << "Sku: "; std::cin >> sku_n;
-			in.width(max_length_label);
+			std::cout.width(max_length_label);
 			std::cout << "Name (no spaces): "; std::cin >> name_n;
-			in.width(max_length_label);
+			std::cout.width(max_length_label);
 			std::cout << "Unit: "; std::cin >> unit_n;
-			in.width(max_length_label);
+			std::cout.width(max_length_label);
 			std::cout << "Taxed? (y/n): "; std::cin >> taxable_n;
 			if (taxable_n == 'Y' || taxable_n == 'y' || taxable_n == 'N' || taxable_n == 'n')
 				check = true;
@@ -130,7 +130,7 @@ namespace ama {
 				this->ErrorState::message("Only (Y)es or (N)o are acceptable!");
 			}
 			if (check) {
-				in.width(max_length_label);
+				std::cout.width(max_length_label);
 				std::cout << "Price: "; std::cin >> costBeforeTax_n;
 				if (in.fail()) {
 					check = false;
@@ -138,7 +138,7 @@ namespace ama {
 					this->ErrorState::message("Invalid Price Entry!");
 				}
 				if (check) {
-					in.width(max_length_label);
+					std::cout.width(max_length_label);
 					std::cout << "Quantity on Hand: "; std::cin >> qtyAvail_n;
 					if (in.fail() || qtyAvail_n < 1) {
 						check = false;
@@ -146,7 +146,7 @@ namespace ama {
 						this->ErrorState::message("Invalid Quantity Available Entry!");
 					}
 					if (check) {
-						in.width(max_length_label);
+						std::cout.width(max_length_label);
 						std::cout << "Quantity needed: "; std::cin >> qtyNeed_n;
 						if (in.fail() || qtyNeed_n < 1) {
 							check = false;
@@ -156,42 +156,44 @@ namespace ama {
 					}
 				}
 			}
-			in.unsetf(std::ios::right);
+			std::cout.unsetf(std::ios::right);
 		}
 		return in;
 	}
 	std::ostream& Product::write(std::ostream& out, int writeMode) const {
-		if (*this) 
-			out << *this;
-		if (writeMode == write_condensed && *this) {
-			out << type << "," << sku << "," << name << "," << unit << "," << costBeforeTax << taxable
-				<< "," << qtyAvail << "," << qtyNeed << std::endl;
-		}
-		if (writeMode == write_table && *this) {
-			out << " "; out.setf(std::ios::right); out.width(max_length_sku); out << sku; out.unsetf(std::ios::right);
-			out << " | "; out.setf(std::ios::left);
-			if (strlen(name) > max_name_length) {
-				out.width(max_name_length - 3); out << name << "... | ";
+		if (*this) {
+			if (*this)
+				out << *this;
+			else if (writeMode == write_condensed && !*this) {
+				out << type << "," << sku << "," << name << "," << unit << "," << costBeforeTax << taxable
+					<< "," << qtyAvail << "," << qtyNeed << std::endl;
 			}
-			else {
-				out.width(max_name_length); out << name << " | ";
+			else if (writeMode == write_table && !*this) {
+				out << " "; out.setf(std::ios::right); out.width(max_length_sku); out << sku; out.unsetf(std::ios::right);
+				out << " | "; out.setf(std::ios::left);
+				if (strlen(name) > max_name_length) {
+					out.width(max_name_length - 3); out << name << "... | ";
+				}
+				else {
+					out.width(max_name_length); out << name << " | ";
+				}
+				out.width(max_length_unit); out << unit; out.unsetf(std::ios::left); out.setf(std::ios::right);
+				out.precision(2); out.width(max_length_sku); out << costBeforeTax;
+				if (taxable == 'y' || taxable == 'Y')
+					out << "yes";
+				else
+					out << "no";
+				out.precision(6); out << qtyAvail; out.precision(6); out << qtyNeed; out.unsetf(std::ios::right);
 			}
-			out.width(max_length_unit); out << unit; out.unsetf(std::ios::left); out.setf(std::ios::right);
-			out.precision(2); out.width(max_length_sku); out << costBeforeTax; 
-			if (taxable == 'y' || taxable == 'Y') 
-				out << "yes";
-			else
-				out << "no";
-			out.precision(6); out << qtyAvail; out.precision(6); out << qtyNeed; out.unsetf(std::ios::right);
-		}
-		if (writeMode == write_human && *this) {
-			out.setf(std::ios::right); out.width(max_length_label); out << "Sku: " << sku << std::endl;
-			out.width(max_length_label); out << "Name: " << name << std::endl;
-			out.width(max_length_label); out << "Price: " << costBeforeTax << std::endl;
-			out.width(max_length_label); out << "Price after tax: " << total_cost() << std::endl;
-			out.width(max_length_label); out << "Quantity Available: " << qtyAvail << std::endl;
-			out.width(max_length_label); out << "Quantity Needed: " << qtyNeed << std::endl;
-			out.unsetf(std::ios::right);
+			else if (writeMode == write_human && !*this) {
+				out.setf(std::ios::right); out.width(max_length_label); out << "Sku: " << sku << std::endl;
+				out.width(max_length_label); out << "Name: " << name << std::endl;
+				out.width(max_length_label); out << "Price: " << costBeforeTax << std::endl;
+				out.width(max_length_label); out << "Price after tax: " << total_cost() << std::endl;
+				out.width(max_length_label); out << "Quantity Available: " << qtyAvail << std::endl;
+				out.width(max_length_label); out << "Quantity Needed: " << qtyNeed << std::endl;
+				out.unsetf(std::ios::right);
+			}
 		}
 		return out;
 	}
