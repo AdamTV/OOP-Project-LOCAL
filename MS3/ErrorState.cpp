@@ -36,6 +36,7 @@ namespace ama {
 		ErrorState temp(pText);
 		if (temp) {
 			delete[] currentMessage;
+			currentMessage = nullptr;
 			this->currentMessage = temp.currentMessage;
 			temp.currentMessage = nullptr;
 		}

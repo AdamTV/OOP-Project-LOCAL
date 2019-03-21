@@ -1,5 +1,6 @@
-﻿  Product.cpp
-  Utilities.cpp
+﻿  ErrorState.cpp
   ms3.cpp
+  Product.cpp
+  Utilities.cpp
   Generating Code...
   MS3.vcxproj -> C:\Users\adams\source\repos\GitHub\OOP-Project-LOCAL\MS3\MS3\Debug\MS3.exe
