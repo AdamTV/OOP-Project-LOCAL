@@ -53,6 +53,7 @@ namespace ama {
 			taxable = src.taxable;
 			//*this = Product(src.sku, src.name, src.unit, src.costBeforeTax, src.qtyNeed, src.qtyAvail, src.taxable);
 			delete[] name;
+			name = nullptr;
 			int len = strlen(src.name);
 			name = new char[len + 1];
 			strncpy(name, src.name, len);
