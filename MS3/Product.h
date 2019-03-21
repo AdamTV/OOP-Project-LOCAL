@@ -12,20 +12,20 @@ namespace ama {
 		write_condensed = 0, write_table = 1, write_human = 2, max_name_length = 16;
 	const double tax_rate = 0.13;
 	
-	class Product : public ErrorState {
+	class Product {
 		const char type;
 		char sku[max_length_sku + 1];
 		char unit[max_length_unit + 1];
 		char * name;
 		int qtyAvail, qtyNeed;
 		double costBeforeTax, costAfterTax;
-		bool taxable, PerrorState;
-		using ErrorState::ErrorState;
+		bool taxable, PSafeEmptyState;
+		ErrorState errorState;
 	protected:
 		void message(const char* pText);
 		bool isClear() const;
 	public:
-		Product(char type_n = 'N') :type(type_n), ErrorState() { PerrorState = true; };
+		Product(char type_n = 'N') : type(type_n){ PSafeEmptyState = true; };
 		Product(const char*, const char*, const char*, double = 0, int = 0, int = 0, bool = true);
 		Product(const Product&);
 		Product& operator=(const Product&);

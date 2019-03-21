@@ -9,11 +9,11 @@
 
 namespace ama {
 	void Product::message(const char* pText) {
-		ErrorState::message(pText);
+		errorState.message(pText);
 	}
 	bool Product::isClear() const {
 		bool check = false;
-		if (!*this)
+		if (!errorState)
 			check = true;
 		return check;
 	}
@@ -23,8 +23,8 @@ namespace ama {
 	Product::Product(const char* sku_n, const char* name_n, const char* unit_n, double costBeforeTax_n,
 		int qtyNeed_n, int qtyAvail_n, bool taxable_n) :type('N') {
 		if (name_n == nullptr) {
-			PerrorState = true;
-			this->ErrorState::message(nullptr);
+			PSafeEmptyState = true;
+			errorState.message(nullptr);
 		}
 		else {
 			int len = strlen(name_n);
@@ -36,7 +36,7 @@ namespace ama {
 			costBeforeTax = costBeforeTax_n;
 			qtyNeed = qtyNeed_n, qtyAvail = qtyAvail_n;
 			taxable = taxable_n;
-			PerrorState = false;
+			PSafeEmptyState = false;
 		}
 	}
 	Product::Product(const Product& source) :type('N') {
@@ -45,7 +45,7 @@ namespace ama {
 	}
 	Product& Product::operator=(const Product& src) {
 		if (this != &src) {
-			PerrorState = src.PerrorState;
+			PSafeEmptyState = src.PSafeEmptyState;
 			strncpy(sku, src.sku, max_length_sku);
 			strncpy(unit, src.unit, max_length_unit);
 			costBeforeTax = src.costBeforeTax;
@@ -103,14 +103,17 @@ namespace ama {
 		return total;
 	}
 	bool Product::isEmpty() const {
-		return PerrorState;
+		return PSafeEmptyState;
 	}
 	std::istream& Product::read(std::istream& in, bool interractive) {
 		char sku_n[max_length_sku + 1];
 		char unit_n[max_length_unit + 1];
 		char name_n[max_length_name];
+		const char* sku_x = sku_n;
+		const char* unit_x = unit_n;
+		const char* name_x = name_n;
 		int qtyAvail_n, qtyNeed_n;
-		double costBeforeTax_n, costAfterTax_n;
+		double costBeforeTax_n;
 		bool taxable_n;
 		char taxitem;
 		if (!interractive) {
@@ -127,7 +130,7 @@ namespace ama {
 			in.ignore();
 			in >> qtyNeed_n;
 			in.ignore();
-			Product tmp(sku_n, name_n, unit_n, costBeforeTax_n, qtyNeed_n, qtyAvail_n, taxable_n);
+			Product tmp(sku_x, name_x, unit_x, costBeforeTax_n, qtyNeed_n, qtyAvail_n, taxable_n);
 			*this = tmp;
 		}
 		if (interractive) {
@@ -149,7 +152,7 @@ namespace ama {
 			else {
 				check = false;
 				in.setstate(std::ios::failbit);
-				this->ErrorState::message("Only (Y)es or (N)o are acceptable!");
+				errorState.message("Only (Y)es or (N)o are acceptable!");
 			}
 			if (check) {
 				std::cout.width(max_length_label);
@@ -157,7 +160,7 @@ namespace ama {
 				if (in.fail()) {
 					check = false;
 					in.setstate(std::ios::failbit);
-					this->ErrorState::message("Invalid Price Entry!");
+					errorState.message("Invalid Price Entry!");
 				}
 				if (check) {
 					std::cout.width(max_length_label);
@@ -165,7 +168,7 @@ namespace ama {
 					if (in.fail() || qtyAvail_n < 1) {
 						check = false;
 						in.setstate(std::ios::failbit);
-						this->ErrorState::message("Invalid Quantity Available Entry!");
+						errorState.message("Invalid Quantity Available Entry!");
 					}
 					if (check) {
 						std::cout.width(max_length_label);
@@ -173,10 +176,10 @@ namespace ama {
 						if (in.fail() || qtyNeed_n < 1) {
 							check = false;
 							in.setstate(std::ios::failbit);
-							this->ErrorState::message("Invalid Quantity Needed Entry!");
+							errorState.message("Invalid Quantity Needed Entry!");
 						}
 						if (check) {
-							Product tmp(sku_n, name_n, unit_n, costBeforeTax_n, qtyNeed_n, qtyAvail_n, taxable_n);
+							Product tmp(sku_x, name_x, unit_x, costBeforeTax_n, qtyNeed_n, qtyAvail_n, taxable_n);
 							*this = tmp;
 						}
 					}
@@ -187,8 +190,8 @@ namespace ama {
 		return in;
 	}
 	std::ostream& Product::write(std::ostream& out, int writeMode) const {
-		if (*this)
-			out << *this;
+		if (errorState)
+			out << errorState;
 		else if (!(isEmpty())) {
 			if (writeMode == write_condensed) {
 				out.setf(std::ios::fixed); out.precision(2);
@@ -221,7 +224,7 @@ namespace ama {
 				out.width(6);
 				out << qtyAvail << " | ";
 				out.width(6);
-				out << qtyNeed << " | ";
+				out << qtyNeed << " |";
 				out.unsetf(std::ios::fixed);
 				out.unsetf(std::ios::right);
 			}
@@ -233,7 +236,7 @@ namespace ama {
 				out.setf(std::ios::right); out.width(max_length_label); out << "Sku: " << sku << std::endl;
 				out.width(max_length_label); out << "Name: " << name << std::endl;
 				out.width(max_length_label); out << "Price: " << costBeforeTax << std::endl;
-				out.width(max_length_label); out << "Price after tax: " << afterTax << std::endl;
+				out.width(max_length_label); out << "Price after Tax: " << afterTax << std::endl;
 				out.width(max_length_label); out << "Quantity Available: " << qtyAvail << " " << unit << std::endl;
 				out.width(max_length_label); out << "Quantity Needed: " << qtyNeed << " " << unit << std::endl;
 				out.precision(5);
