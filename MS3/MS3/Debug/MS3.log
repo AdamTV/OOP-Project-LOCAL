@@ -1,6 +1,3 @@
-﻿  ErrorState.cpp
-  Product.cpp
-c:\users\adams\source\repos\github\oop-project-local\ms3\product.cpp(103): warning C4101: 'costAfterTax_n': unreferenced local variable
-c:\users\adams\source\repos\github\oop-project-local\ms3\product.cpp(182): warning C4806: '==': unsafe operation: no value of type 'const bool' promoted to type 'char' can equal the given constant
-  Generating Code...
+﻿  Product.cpp
+c:\users\adams\source\repos\github\oop-project-local\ms3\product.cpp(113): warning C4101: 'costAfterTax_n': unreferenced local variable
   MS3.vcxproj -> C:\Users\adams\source\repos\GitHub\OOP-Project-LOCAL\MS3\MS3\Debug\MS3.exe

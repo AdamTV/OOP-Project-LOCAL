@@ -19,13 +19,13 @@ namespace ama {
 		char * name;
 		int qtyAvail, qtyNeed;
 		double costBeforeTax, costAfterTax;
-		bool taxable;
+		bool taxable, PerrorState;
 		using ErrorState::ErrorState;
 	protected:
 		void message(const char* pText);
 		bool isClear() const;
 	public:
-		Product(char type_n = 'N') :type(type_n), ErrorState() {};
+		Product(char type_n = 'N') :type(type_n), ErrorState() { PerrorState = true; };
 		Product(const char*, const char*, const char*, double = 0, int = 0, int = 0, bool = true);
 		Product(const Product&);
 		Product& operator=(const Product&);

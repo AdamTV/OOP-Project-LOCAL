@@ -34,7 +34,7 @@ namespace ama {
 	}
 	ErrorState& ErrorState::operator=(const char * pText) {
 		ErrorState temp(pText);
-		if (!temp) {
+		if (temp) {
 			delete[] currentMessage;
 			this->currentMessage = temp.currentMessage;
 			temp.currentMessage = nullptr;

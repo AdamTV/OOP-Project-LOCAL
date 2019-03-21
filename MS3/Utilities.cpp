@@ -7,8 +7,10 @@
 
 namespace ama {
 	double& operator+=(double& total, const Product& prod) {
-		double total_n = total + prod.total_cost();
-		return total_n;
+		total += prod.total_cost();
+		//double total_n = total + prod.total_cost();
+		//double& total_x = total_n;
+		return total;
 	}
 	std::ostream& operator<<(std::ostream& out, const Product& prod) {
 		prod.write(out, write_human);
