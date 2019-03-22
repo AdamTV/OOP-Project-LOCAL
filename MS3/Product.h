@@ -25,7 +25,7 @@ namespace ama {
 		void message(const char* pText);
 		bool isClear() const;
 	public:
-		Product(char type_n = 'N') : type(type_n){ PSafeEmptyState = true; };
+		Product(char type_n = 'N') : type(type_n) { PSafeEmptyState = true; name = nullptr; };
 		Product(const char*, const char*, const char*, double = 0, int = 0, int = 0, bool = true);
 		Product(const Product&);
 		Product& operator=(const Product&);

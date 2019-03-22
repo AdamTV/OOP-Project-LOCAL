@@ -23,6 +23,7 @@ namespace ama {
 	Product::Product(const char* sku_n, const char* name_n, const char* unit_n, double costBeforeTax_n,
 		int qtyNeed_n, int qtyAvail_n, bool taxable_n) :type('N') {
 		if (name_n == nullptr) {
+			name = nullptr;
 			PSafeEmptyState = true;
 			errorState.message(nullptr);
 		}
