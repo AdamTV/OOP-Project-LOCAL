@@ -11,8 +11,31 @@ namespace ama {
 		Product::write(out, writeMode);
 		if (!isEmpty()) {
 			if (writeMode == write_human) {
+				out.setf(std::ios::right); out.width(max_length_label);
+				out << "Expiry Date: ";
+				Date::write; out << std::endl; out.unsetf(std::ios::right);
+			}
+			if (writeMode == write_table) {
+				out << " " << Date::write << " |";
+			}
+			if (writeMode == write_condensed) {
+				out << ", " << Date::write;
+			}
+		}
+	}
+	std::istream& Perishable::read(std::istream& in, bool interractive) {
+		Product::read(in, interractive);
+		if (interractive) {
+			std::cout.setf(std::ios::right); std::cout.width(max_length_label);
+			std::cout << "Expiry date (YYYY/MM/DD): ";
+			std::cout.unsetf(std::ios::right);
+			Date::read;
+			if (!isClear()) {
 
 			}
+		}
+		if (!interractive) {
+
 		}
 	}
 }

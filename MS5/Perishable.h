@@ -14,6 +14,7 @@ namespace ama {
 		Date currentDate;
 		Perishable() : Product('P') {};
 		std::ostream& write(std::ostream& out, int writeMode) const;
+		std::istream& read(std::istream& in, bool interractive);
 	};
 }
 #endif

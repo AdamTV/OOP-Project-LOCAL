@@ -3,6 +3,7 @@
 // Student #:	124521188
 // Course:		OOP244 Winter 2019
 // File:		Product.h
+
 #ifndef AMA_PRODUCT_H
 #define AMA_PRODUCT_H
 #include "ErrorState.h"
