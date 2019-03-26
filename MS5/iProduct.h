@@ -5,7 +5,7 @@
 // File:		iProduct.h
 #ifndef AMA_IPRODUCT_H
 #define AMA_IPRODUCT_H
-#include<iostream>
+#include <iostream>
 
 namespace ama {
 	const int max_length_label = 30, max_length_sku = 7, max_length_name = 75, max_length_unit = 10,

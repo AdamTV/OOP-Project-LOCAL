@@ -22,6 +22,8 @@ namespace ama {
 		iProduct* tmp = nullptr;
 		if (tag == 'n' || tag == 'N')
 			tmp = new Product;
+		if (tag == 'p' || tag == 'P')
+			tmp = new Perishable;
 		return tmp;
 	}
 

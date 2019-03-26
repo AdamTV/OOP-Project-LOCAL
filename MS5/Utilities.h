@@ -5,7 +5,7 @@
 // File:		Utilities.h
 #ifndef AMA_UTILITIES_H
 #define AMA_UTILITIES_H
-#include "Product.h"
+#include "Perishable.h"
 
 namespace ama {
 	double& operator+=(double& total, const iProduct& prod);

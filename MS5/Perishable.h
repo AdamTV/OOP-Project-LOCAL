@@ -12,6 +12,7 @@
 namespace ama {
 	class Perishable : public Product {
 		Date currentDate;
+	public:
 		Perishable() : Product('P') {};
 		std::ostream& write(std::ostream& out, int writeMode) const;
 		std::istream& read(std::istream& in, bool interractive);

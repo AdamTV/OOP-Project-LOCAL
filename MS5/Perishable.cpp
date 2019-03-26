@@ -16,10 +16,10 @@ namespace ama {
 				Date::write; out << std::endl; out.unsetf(std::ios::right);
 			}
 			if (writeMode == write_table) {
-				out << " " << Date::write << " |";
+				out << " " << currentDate.write << " |";
 			}
 			if (writeMode == write_condensed) {
-				out << ", " << Date::write;
+				out << ", " << currentDate.write;
 			}
 		}
 	}
@@ -29,13 +29,15 @@ namespace ama {
 			std::cout.setf(std::ios::right); std::cout.width(max_length_label);
 			std::cout << "Expiry date (YYYY/MM/DD): ";
 			std::cout.unsetf(std::ios::right);
-			Date::read;
+			currentDate.read;
 			if (!isClear()) {
-
+				in.setstate(std::ios::failbit);
+				Product::message("Invalid Date Entry");
 			}
 		}
 		if (!interractive) {
-
+			currentDate.read;
+			in.ignore();
 		}
 	}
 }
