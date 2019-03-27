@@ -30,7 +30,7 @@ namespace ama {
 			std::cout.setf(std::ios::right); std::cout.width(max_length_label);
 			std::cout << "Expiry date (YYYY/MM/DD): ";
 			std::cout.unsetf(std::ios::right);
-			currentDate.read(in);
+			in >> currentDate;
 			if (!currentDate.isGood()) {
 				in.setstate(std::ios::failbit);
 				Product::message("Invalid Date Entry");

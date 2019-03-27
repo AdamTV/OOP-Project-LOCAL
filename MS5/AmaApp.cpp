@@ -30,10 +30,10 @@ namespace ama {
 		}
 	}
 	int AmaApp::run() {
-		int choice;
+		bool go = true;
+		iProduct* tmp;
 		do {
-			iProduct* tmp;
-			choice = menu();
+			int choice = menu();
 			switch (choice)
 			{
 			case 1:
@@ -74,13 +74,15 @@ namespace ama {
 				break;
 			case 0:
 				cout << "Goodbye!\n";
+				go = false;
 				break;
 			default:
 				cout << "~~~Invalid selection, try again!~~~\n";
 				break;
 			}
+			if(choice != 3 && choice != 4 && choice != 5 && choice != 0)
 			pause();
-		} while (choice != 0);
+		} while (go);
 		return 0;
 	}
 	void AmaApp::pause() const {
@@ -88,7 +90,8 @@ namespace ama {
 		std::cin.ignore(2000, '\n');
 	}
 	int	AmaApp::menu() const {
-		int choice = -1;
+		int choice;
+		char theChocie;
 		cout << "Disaster Aid Supply Management Program\n"
 			<< setfill('-') << setw(38) << '-' << setfill(' ') <<
 			"\n1- List products\n"
@@ -99,8 +102,9 @@ namespace ama {
 			"6- Delete product\n"
 			"7- Sort products\n"
 			"0- Exit program\n> ";
-		cin >> choice;
-		cin.ignore(2000, '\n'); //NOT SURE
+		cin.get(theChocie);
+		choice = theChocie - '0';
+		//cin.ignore(2000, '\n'); //NOT SURE
 		return choice;
 	}
 	void AmaApp::loadProductRecords() {
@@ -136,7 +140,7 @@ namespace ama {
 		}
 	}
 	void AmaApp::listProducts() {
-		cout << setw(96) << "-" << endl <<
+		cout << setfill('-') << setw(96) <<  "-" << endl <<
 			"| Row |     SKU | Product Name     | Unit       |   Price | Tax |   QtyA |   QtyN | Expiry     |\n"
 			"|-----|---------|------------------|------------|---------|-----|--------|--------|------------|"
 			<< endl;
@@ -192,7 +196,7 @@ namespace ama {
 	void AmaApp::addProduct(char tag) {
 		iProduct* temp = createInstance(tag);
 		if (temp != nullptr) {
-			*m_products[m_noOfProducts - 1] = *temp;
+			m_products[m_noOfProducts - 1] = temp;
 			cin >> *m_products[m_noOfProducts - 1];
 			std::cin.ignore(2000, '\n');
 			if (cin.fail()) {
