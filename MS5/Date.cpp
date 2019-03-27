@@ -153,6 +153,7 @@ namespace ama {
 			valid = false;
 		is.ignore();
 		is >> day_n;
+		is.ignore();
 		if (is.fail())
 			valid = false;
 		Date tmp = Date(year_n, month_n, day_n);

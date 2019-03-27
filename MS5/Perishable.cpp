@@ -9,7 +9,7 @@
 namespace ama {
 	std::ostream& Perishable::write(std::ostream& out, int writeMode) const {
 		Product::write(out, writeMode);
-		if (!isEmpty()) {
+		if (!(isEmpty())) {
 			if (writeMode == write_human) {
 				out.setf(std::ios::right); out.width(max_length_label);
 				out << "Expiry Date: ";
@@ -32,6 +32,7 @@ namespace ama {
 			std::cout.unsetf(std::ios::right);
 			in >> currentDate;
 			if (!currentDate.isGood()) {
+				empty();
 				in.setstate(std::ios::failbit);
 				Product::message("Invalid Date Entry");
 			}
@@ -39,7 +40,7 @@ namespace ama {
 		}
 		if (!interractive) {
 			currentDate.read(in);
-			in.ignore();
+			//in.ignore();
 		}
 	}
 }

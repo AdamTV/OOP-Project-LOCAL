@@ -66,11 +66,16 @@ namespace ama {
 				char tmpSKU[max_length_sku + 1];
 				cout << "Please enter the product SKU: ";
 				cin >> tmpSKU;
+				cout << endl;
 				std::cin.ignore(2000, '\n');
 				tmp = find(tmpSKU);
 				if (tmp != nullptr) {
 					addQty(tmp);
 				}
+				else {
+					cout << "No such product!\n";
+				}
+				cout << endl;
 				break;
 			case 0:
 				cout << "Goodbye!\n";
@@ -104,7 +109,7 @@ namespace ama {
 			"0- Exit program\n> ";
 		cin.get(theChocie);
 		choice = theChocie - '0';
-		//cin.ignore(2000, '\n'); //NOT SURE
+		cin.ignore(2000, '\n'); //NOT SURE
 		return choice;
 	}
 	void AmaApp::loadProductRecords() {
@@ -128,7 +133,7 @@ namespace ama {
 					m_products[i]->read(fin, false);
 				}
 			}
-			m_noOfProducts = i;
+			m_noOfProducts = i - 1;
 			fin.close();
 		}
 	}
@@ -137,6 +142,7 @@ namespace ama {
 		ofstream o(m_filename);
 		for (int i = 0; i < m_noOfProducts; i++) {
 			m_products[i]->write(o, write_condensed);
+			o << endl;
 		}
 	}
 	void AmaApp::listProducts() {
@@ -145,7 +151,7 @@ namespace ama {
 			"|-----|---------|------------------|------------|---------|-----|--------|--------|------------|"
 			<< endl;
 		double total = 0;
-		for (int i = 0; i < m_noOfProducts - 1; i++) {
+		for (int i = 0; i < m_noOfProducts; i++) {
 			cout << "|" << setfill(' ') << right << setw(4) << i + 1 << " |";
 			m_products[i]->write(cout, write_table); cout << endl;
 			total += *m_products[i];
@@ -173,18 +179,19 @@ namespace ama {
 	void AmaApp::addQty(iProduct* product) {
 		product->write(cout, write_human); cout << "\n\n"
 			"Please enter the number of purchased items: ";
-		int number; cin >> number; std::cin.ignore(2000, '\n');
+		int number; cin >> number;
 		if (cin.fail()) {
 			cin.clear();
+			cin.ignore(2000, '\n');
 			cout << "Invalid quantity value!\n";
 		}
 		else {
 			int required = (product->qtyNeeded() - product->qtyAvailable());
 			if (number < required || number == required) {
-				product += number;
+				*product += number;
 			}
 			else {
-				product += required;
+				*product += required;
 				cout << "Too many items; only " << required << " is needed. Please return the extra "
 					<< number - required << " items.\n";
 			}
@@ -196,11 +203,13 @@ namespace ama {
 	void AmaApp::addProduct(char tag) {
 		iProduct* temp = createInstance(tag);
 		if (temp != nullptr) {
+			m_noOfProducts++;
 			m_products[m_noOfProducts - 1] = temp;
 			cin >> *m_products[m_noOfProducts - 1];
-			std::cin.ignore(2000, '\n');
+
 			if (cin.fail()) {
 				cin.clear();
+				std::cin.ignore(2000, '\n');
 				cout << endl << *m_products[m_noOfProducts - 1] << endl << endl;
 			}
 			else {

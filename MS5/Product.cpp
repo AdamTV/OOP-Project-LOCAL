@@ -8,6 +8,9 @@
 #include <cstring>
 
 namespace ama {
+	void Product::empty() {
+		PSafeEmptyState = true;
+	}
 	const char* Product::name() const {
 		return currentName;
 	}
@@ -139,45 +142,57 @@ namespace ama {
 			bool check = true;
 			std::cout.setf(std::ios::right);
 			std::cout.width(max_length_label);
-			std::cout << "Sku: "; std::cin >> sku_n; std::cin.ignore(2000, '\n');
+			std::cout << "Sku: "; std::cin >> sku_n; //std::cin.ignore(2000, '\n');
 			std::cout.width(max_length_label);
-			std::cout << "Name (no spaces): "; std::cin >> name_n; std::cin.ignore(2000, '\n');
+			std::cout << "Name (no spaces): "; std::cin >> name_n; //std::cin.ignore(2000, '\n');
 			std::cout.width(max_length_label);
-			std::cout << "Unit: "; std::cin >> unit_n; std::cin.ignore(2000, '\n');
+			std::cout << "Unit: "; std::cin >> unit_n; //std::cin.ignore(2000, '\n');
 			std::cout.width(max_length_label);
-			std::cout << "Taxed? (y/n): "; std::cin >> taxitem; std::cin.ignore(2000, '\n');
+			std::cout << "Taxed? (y/n): "; std::cin >> taxitem; //std::cin.ignore(2000, '\n');
 			if (taxitem == 'Y' || taxitem == 'y')
 				taxable_n = true;
 			else if (taxitem == 'N' || taxitem == 'n')
 				taxable_n = false;
 			else {
+				PSafeEmptyState = true;
 				check = false;
 				in.setstate(std::ios::failbit);
 				errorState.message("Only (Y)es or (N)o are acceptable!");
 			}
 			if (check) {
 				std::cout.width(max_length_label);
-				std::cout << "Price: "; std::cin >> costBeforeTax_n; std::cin.ignore(2000, '\n');
+				std::cout << "Price: "; 
+				std::cin >> costBeforeTax_n;
+				std::cin.ignore(2000, '\n');
 				if (in.fail()) {
 					std::cout.flush();
-					std::cin.get();
+					//std::cin.get();
+					std::cin.ignore(2000, '\n');
 					std::cin.ignore();
+					std::cout.flush();
+					PSafeEmptyState = true;
 					check = false;
 					in.setstate(std::ios::failbit);
 					errorState.message("Invalid Price Entry!");
 				}
 				if (check) {
 					std::cout.width(max_length_label);
-					std::cout << "Quantity on Hand: "; std::cin >> qtyAvail_n; std::cin.ignore(2000, '\n');
+					std::cout << "Quantity on Hand: ";
+					std::cin >> qtyAvail_n;
+					std::cin.ignore(2000, '\n');
 					if (in.fail() || qtyAvail_n < 1) {
+						PSafeEmptyState = true;
 						check = false;
 						in.setstate(std::ios::failbit);
 						errorState.message("Invalid Quantity Available Entry!");
 					}
 					if (check) {
 						std::cout.width(max_length_label);
-						std::cout << "Quantity needed: "; std::cin >> qtyNeed_n; std::cin.ignore(2000, '\n');
+						std::cout << "Quantity needed: ";
+						std::cin >> qtyNeed_n; 
+						std::cin.ignore(2000, '\n');
 						if (in.fail() || qtyNeed_n < 1) {
+							PSafeEmptyState = true;
 							check = false;
 							in.setstate(std::ios::failbit);
 							errorState.message("Invalid Quantity Needed Entry!");
