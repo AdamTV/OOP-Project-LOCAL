@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 // Milestone:	5
 // Name:		ADAM STINZIANI
 // Student #:	124521188
@@ -29,7 +30,58 @@ namespace ama {
 		}
 	}
 	int AmaApp::run() {
-
+		int choice;
+		do {
+			iProduct* tmp;
+			choice = menu();
+			switch (choice)
+			{
+			case 1:
+				listProducts();
+				break;
+			case 2:
+				cout << "Please enter the product SKU: ";
+				char tempSKU[max_length_sku + 1];
+				cin >> tempSKU;
+				std::cin.ignore(2000, '\n');
+				tmp = find(tempSKU);
+				cout << endl;
+				if (tmp != nullptr) {
+					tmp->write(cout, write_human);
+				}
+				else {
+					cout << "No such product!";
+				}
+				cout << endl;
+				break;
+			case 3:
+				addProduct('n');
+				loadProductRecords();
+				break;
+			case 4:
+				addProduct('p');
+				loadProductRecords();
+				break;
+			case 5:
+				char tmpSKU[max_length_sku + 1];
+				cout << "Please enter the product SKU: ";
+				cin >> tmpSKU;
+				std::cin.ignore(2000, '\n');
+				tmp = find(tmpSKU);
+				if (tmp != nullptr) {
+					addQty(tmp);
+				}
+				break;
+			case 0:
+				cout << "Goodbye!\n";
+				break;
+			default:
+				cout << "~~~Invalid selection, try again!~~~\n";
+				break;
+			}
+			pause();
+		} while (choice != 0);
+		return 0;
 	}
 	void AmaApp::pause() const {
 		std::cout << "Press Enter to continue...\n";
@@ -37,8 +89,8 @@ namespace ama {
 	}
 	int	AmaApp::menu() const {
 		int choice = -1;
-		cout << "Disaster Aid Supply Management Program\n" 
-			 << setfill('-') << setw(38) << '-' <<
+		cout << "Disaster Aid Supply Management Program\n"
+			<< setfill('-') << setw(38) << '-' << setfill(' ') <<
 			"\n1- List products\n"
 			"2- Search product\n"
 			"3- Add non-perishable product\n"
@@ -77,22 +129,80 @@ namespace ama {
 		}
 	}
 	void AmaApp::saveProductRecords() {
-		
+		ios::out;
+		ofstream o(m_filename);
+		for (int i = 0; i < m_noOfProducts; i++) {
+			m_products[i]->write(o, write_condensed);
+		}
 	}
 	void AmaApp::listProducts() {
-		cout << setw(96) << "-" << endl
-			<< "| Row |";
+		cout << setw(96) << "-" << endl <<
+			"| Row |     SKU | Product Name     | Unit       |   Price | Tax |   QtyA |   QtyN | Expiry     |\n"
+			"|-----|---------|------------------|------------|---------|-----|--------|--------|------------|"
+			<< endl;
+		double total = 0;
+		for (int i = 0; i < m_noOfProducts - 1; i++) {
+			cout << "|" << setfill(' ') << right << setw(4) << i + 1 << " |";
+			m_products[i]->write(cout, write_table); cout << endl;
+			total += *m_products[i];
+		}
+		cout << setfill('-') << setw(96) << "-" << endl << setfill(' ') << "|" <<
+			setw(82) << "Total cost of support ($): |" << " " << fixed << setprecision(2) 
+			<< setw(10) << right << total << " |" <<
+			endl << setfill('-') << setw(96) << "-" << endl << endl << setfill(' ') << setprecision(6);
+		cout.unsetf(ios::fixed);
 	}
 	void AmaApp::deleteProductRecord(iProduct* product) {
 
 	}
 	iProduct* AmaApp::find(const char* sku) const {
-
+		iProduct* found = nullptr;
+		bool check = false;
+		for (int i = 0; i < m_noOfProducts && !check; i++) {
+			if (*m_products[i] == sku) {
+				found = m_products[i];
+				check = true;
+			}
+		}
+		return found;
 	}
 	void AmaApp::addQty(iProduct* product) {
-
+		product->write(cout, write_human); cout << "\n\n"
+			"Please enter the number of purchased items: ";
+		int number; cin >> number; std::cin.ignore(2000, '\n');
+		if (cin.fail()) {
+			cin.clear();
+			cout << "Invalid quantity value!\n";
+		}
+		else {
+			int required = (product->qtyNeeded() - product->qtyAvailable());
+			if (number < required || number == required) {
+				product += number;
+			}
+			else {
+				product += required;
+				cout << "Too many items; only " << required << " is needed. Please return the extra "
+					<< number - required << " items.\n";
+			}
+			saveProductRecords();
+			cout << "\nUpdated!\n";
+			cin.ignore(2000, '\n'); //NOT SURE
+		}
 	}
 	void AmaApp::addProduct(char tag) {
-
+		iProduct* temp = createInstance(tag);
+		if (temp != nullptr) {
+			*m_products[m_noOfProducts - 1] = *temp;
+			cin >> *m_products[m_noOfProducts - 1];
+			std::cin.ignore(2000, '\n');
+			if (cin.fail()) {
+				cin.clear();
+				cout << endl << *m_products[m_noOfProducts - 1] << endl << endl;
+			}
+			else {
+				saveProductRecords();
+				cout << endl << "Success!" << endl << endl;
+			}
+		}
 	}
 }

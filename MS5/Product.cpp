@@ -221,7 +221,7 @@ namespace ama {
 				if (taxable)
 					out << " | yes | ";
 				else
-					out << " | no | ";
+					out << " |  no | ";
 				out.width(6);
 				out << qtyAvail << " | ";
 				out.width(6);

@@ -1,20 +1,2 @@
 ﻿  AmaApp.cpp
-c:\users\adams\source\repos\github\oop-project-local\ms5\amaapp.cpp(13): error C4996: 'strncpy': This function or variable may be unsafe. Consider using strncpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\string.h(338): note: see declaration of 'strncpy'
-c:\users\adams\source\repos\github\oop-project-local\ms5\amaapp.cpp(32): error C3861: 'setw': identifier not found
-c:\users\adams\source\repos\github\oop-project-local\ms5\amaapp.cpp(32): warning C4293: '<<': shift count negative or too big, undefined behavior
-c:\users\adams\source\repos\github\oop-project-local\ms5\amaapp.cpp(32): warning C4552: '<<': result of expression not used
-  Date.cpp
-  ErrorState.cpp
-  ms5.cpp
-  Perishable.cpp
-c:\users\adams\source\repos\github\oop-project-local\ms5\perishable.cpp(16): error C3867: 'ama::Date::write': non-standard syntax; use '&' to create a pointer to member
-c:\users\adams\source\repos\github\oop-project-local\ms5\perishable.cpp(19): error C3867: 'ama::Date::write': non-standard syntax; use '&' to create a pointer to member
-c:\users\adams\source\repos\github\oop-project-local\ms5\perishable.cpp(22): error C3867: 'ama::Date::write': non-standard syntax; use '&' to create a pointer to member
-c:\users\adams\source\repos\github\oop-project-local\ms5\perishable.cpp(32): error C3867: 'ama::Date::read': non-standard syntax; use '&' to create a pointer to member
-c:\users\adams\source\repos\github\oop-project-local\ms5\perishable.cpp(39): error C3867: 'ama::Date::read': non-standard syntax; use '&' to create a pointer to member
-  Product.cpp
-  Utilities.cpp
-  Generating Code...
-c:\users\adams\source\repos\github\oop-project-local\ms5\date.cpp(83): warning C4172: returning address of local variable or temporary: tmp
-c:\users\adams\source\repos\github\oop-project-local\ms5\date.cpp(92): warning C4172: returning address of local variable or temporary: tmp
+  MS5.vcxproj -> C:\Users\adams\source\repos\GitHub\OOP-Project-LOCAL\MS5\MS5\Debug\MS5.exe

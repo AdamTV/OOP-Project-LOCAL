@@ -13,15 +13,16 @@ namespace ama {
 			if (writeMode == write_human) {
 				out.setf(std::ios::right); out.width(max_length_label);
 				out << "Expiry Date: ";
-				Date::write; out << std::endl; out.unsetf(std::ios::right);
+				currentDate.write(out); out << std::endl; out.unsetf(std::ios::right);
 			}
 			if (writeMode == write_table) {
-				out << " " << currentDate.write << " |";
+				out << " "; currentDate.write(out) << " |";
 			}
 			if (writeMode == write_condensed) {
-				out << ", " << currentDate.write;
+				out << ", "; currentDate.write(out);
 			}
 		}
+		return out;
 	}
 	std::istream& Perishable::read(std::istream& in, bool interractive) {
 		Product::read(in, interractive);
@@ -29,14 +30,15 @@ namespace ama {
 			std::cout.setf(std::ios::right); std::cout.width(max_length_label);
 			std::cout << "Expiry date (YYYY/MM/DD): ";
 			std::cout.unsetf(std::ios::right);
-			currentDate.read;
-			if (!isClear()) {
+			currentDate.read(in);
+			if (!currentDate.isGood()) {
 				in.setstate(std::ios::failbit);
 				Product::message("Invalid Date Entry");
 			}
+			return in;
 		}
 		if (!interractive) {
-			currentDate.read;
+			currentDate.read(in);
 			in.ignore();
 		}
 	}
