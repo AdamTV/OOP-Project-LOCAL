@@ -18,6 +18,7 @@ namespace ama {
 
 	AmaApp::AmaApp(const char * filename) {
 		strncpy(m_filename, filename, max_filename_size);
+		*m_products = NULL;
 		for(int i = 0; i < products; i++)
 			m_products[i] = nullptr;
 		m_noOfProducts = 0;
@@ -50,6 +51,7 @@ namespace ama {
 					tmp->write(cout, write_human);
 				}
 				else {
+					cout << "No such product!";
 					cout << "No such product!";
 				}
 				cout << endl;
