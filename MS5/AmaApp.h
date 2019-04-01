@@ -11,7 +11,7 @@ namespace ama {
 	
 	class AmaApp {
 		char m_filename[256];
-		iProduct *m_products[100];
+		iProduct* m_products[100];
 		int m_noOfProducts;
 	public:
 		AmaApp(const char *);

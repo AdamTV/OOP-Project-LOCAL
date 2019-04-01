@@ -42,5 +42,6 @@ namespace ama {
 			currentDate.read(in);
 			//in.ignore();
 		}
+		return in;
 	}
 }

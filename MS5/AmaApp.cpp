@@ -5,6 +5,7 @@
 // Course:		OOP244 Winter 2019
 // File:		AmaApp.cpp
 
+#include <cstring>
 #include <iomanip>
 #include <fstream>
 #include "Utilities.h"
@@ -17,8 +18,8 @@ namespace ama {
 	const int max_filename_size = 14, products = 100;
 
 	AmaApp::AmaApp(const char * filename) {
+		*m_products = nullptr;
 		strncpy(m_filename, filename, max_filename_size);
-		*m_products = NULL;
 		for(int i = 0; i < products; i++)
 			m_products[i] = nullptr;
 		m_noOfProducts = 0;
@@ -51,7 +52,6 @@ namespace ama {
 					tmp->write(cout, write_human);
 				}
 				else {
-					cout << "No such product!";
 					cout << "No such product!";
 				}
 				cout << endl;
@@ -124,7 +124,7 @@ namespace ama {
 			}
 		}
 		m_noOfProducts = 0;
-		ios::in;
+		//ios::in;
 		ifstream fin("inventory.txt");
 		if (fin.is_open()) {
 			for (i = 0; !fin.fail(); i++) {
@@ -140,7 +140,7 @@ namespace ama {
 		}
 	}
 	void AmaApp::saveProductRecords() {
-		ios::out;
+		//ios::out;
 		ofstream o(m_filename);
 		for (int i = 0; i < m_noOfProducts; i++) {
 			m_products[i]->write(o, write_condensed);

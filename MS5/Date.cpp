@@ -76,20 +76,22 @@ namespace ama {
 	}
 	Date& Date::operator++(int) {
 		Date tmp = *this;
+		Date& gotta = tmp;
 		if (isGood() && day + 1 <= (mdays(year, month)))
 			day++;
 		else
 			this->currentStatus = error_invalid_operation;
-		return tmp;
+		return gotta;
 	}
 	Date& Date::operator+(int days)const {
 		Date tmp = *this;
+		Date& gotta = tmp;
 		if (isGood() && day + days <= (mdays(year, month)) && day + days > 0)
 			tmp = Date(year, month, (day + days));
 		else {
 			tmp.currentStatus = error_invalid_operation;
 		}
-		return tmp;
+		return gotta;
 	}
 	bool Date::operator==(const Date& rhs) const {
 		bool valid = false;
