@@ -155,7 +155,7 @@ namespace ama {
 			valid = false;
 		is.ignore();
 		is >> day_n;
-		is.ignore(2000,'\n');
+		is.ignore(2000, '\n');
 		if (is.fail())
 			valid = false;
 		Date tmp = Date(year_n, month_n, day_n);

@@ -133,7 +133,11 @@ namespace ama {
 			in >> qtyAvail_n;
 			in.ignore();
 			in >> qtyNeed_n;
-			in.ignore();
+			if(type == 'N')
+				in.ignore(2000, '\n');
+			if(type == 'P')
+				in.ignore();
+
 			Product tmp(sku_x, name_x, unit_x, costBeforeTax_n, qtyNeed_n, qtyAvail_n, taxable_n);
 			*this = tmp;
 		}

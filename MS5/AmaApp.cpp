@@ -18,7 +18,7 @@ namespace ama {
 	const int max_filename_size = 14, products = 100;
 
 	AmaApp::AmaApp(const char * filename) {
-		*m_products = nullptr;
+		*m_products = NULL;
 		strncpy(m_filename, filename, max_filename_size);
 		for(int i = 0; i < products; i++)
 			m_products[i] = nullptr;
