@@ -35,6 +35,12 @@ namespace ama {
 				empty();
 				in.setstate(std::ios::failbit);
 				Product::message("Invalid Date Entry");
+				if (currentDate.status() == error_year)
+					message("Invalid Year in Date Entry");
+				if (currentDate.status() == error_mon)
+					message("Invalid Month in Date Entry");
+				if (currentDate.status() == error_day)
+					message("Invalid Day in Date Entry");
 			}
 			return in;
 		}

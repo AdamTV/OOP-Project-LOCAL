@@ -30,7 +30,7 @@ namespace ama {
 		Product(const char*, const char*, const char*, double = 0, int = 0, int = 0, bool = true);
 		Product(const Product&);
 		Product& operator=(const Product&);
-		~Product();
+		virtual ~Product();
 		int operator+=(int cnt);
 		bool operator==(const char*) const;
 		bool operator>(const char*);

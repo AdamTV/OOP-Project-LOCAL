@@ -12,7 +12,7 @@ using namespace std;
 
 namespace ama {
 	ErrorState::ErrorState(const char* errorMessage) {
-
+		currentMessage = nullptr;
 		if (errorMessage != nullptr && errorMessage[0] != '\0') {
 			currentMessage = new char[strlen(errorMessage) + 1];
 			strncpy(currentMessage, errorMessage, strlen(errorMessage));
@@ -23,8 +23,10 @@ namespace ama {
 		}
 	}
 	ErrorState::~ErrorState() {
+		if(currentMessage != nullptr){
 		delete[] currentMessage;
 		currentMessage = nullptr;
+		}
 	}
 	ErrorState::operator bool() const {
 		bool check = true;

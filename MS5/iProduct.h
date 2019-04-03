@@ -22,7 +22,7 @@ namespace ama {
 		virtual const char* name() const = 0;
 		virtual int operator+=(int qty) = 0;
 		virtual bool operator>(const iProduct& other) const = 0;
-		virtual ~iProduct() {};
+		virtual ~iProduct() = default;
 	};
 }
 

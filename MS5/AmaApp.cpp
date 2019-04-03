@@ -10,6 +10,7 @@
 #include <fstream>
 #include "Utilities.h"
 #include "AmaApp.h"
+#include "Sort.h"
 
 using namespace std;
 
@@ -18,7 +19,7 @@ namespace ama {
 	const int max_filename_size = 14, products = 100;
 
 	AmaApp::AmaApp(const char * filename) {
-		*m_products = NULL;
+		*m_products = nullptr;
 		strncpy(m_filename, filename, max_filename_size);
 		for(int i = 0; i < products; i++)
 			m_products[i] = nullptr;
@@ -27,13 +28,13 @@ namespace ama {
 	}
 	AmaApp::~AmaApp() {
 		for (int i = 0; i < m_noOfProducts; i++) {
-			delete[] m_products[i];
+			delete m_products[i];
 			m_products[i] = nullptr;
 		}
 	}
 	int AmaApp::run() {
 		bool go = true;
-		iProduct* tmp;
+		iProduct* tmp = nullptr;
 		do {
 			int choice = menu();
 			switch (choice)
@@ -79,6 +80,11 @@ namespace ama {
 				}
 				cout << endl;
 				break;
+			case 7:
+				sict::sort((m_products), m_noOfProducts);
+				saveProductRecords();
+				cout << "Sorted!\n\n";
+				break;
 			case 0:
 				cout << "Goodbye!\n";
 				go = false;
@@ -98,7 +104,6 @@ namespace ama {
 	}
 	int	AmaApp::menu() const {
 		int choice;
-		char theChocie;
 		cout << "Disaster Aid Supply Management Program\n"
 			<< setfill('-') << setw(38) << '-' << setfill(' ') <<
 			"\n1- List products\n"
@@ -109,25 +114,25 @@ namespace ama {
 			"6- Delete product\n"
 			"7- Sort products\n"
 			"0- Exit program\n> ";
-		cin.get(theChocie);
-		choice = theChocie - '0';
-		cin.ignore(2000, '\n'); //NOT SURE
+		cin >> choice;
+		cin.ignore(2000, '\n');
 		return choice;
 	}
 	void AmaApp::loadProductRecords() {
 		int i;
-		char tag;
+		char tag = '\0';
 		if (m_noOfProducts > 0) {
 			for (int i = 0; i < m_noOfProducts; i++) {
-				delete[] m_products[i];
+				delete m_products[i];
 				m_products[i] = nullptr;
 			}
 		}
 		m_noOfProducts = 0;
-		//ios::in;
 		ifstream fin("inventory.txt");
 		if (fin.is_open()) {
 			for (i = 0; !fin.fail(); i++) {
+				//if(tag == 'p' || tag == 'P')	FOR MATRIX
+					//fin.ignore(2000,'\n');
 				fin.get(tag);
 				if (createInstance(tag) != nullptr) {
 					fin.ignore();
@@ -140,7 +145,6 @@ namespace ama {
 		}
 	}
 	void AmaApp::saveProductRecords() {
-		//ios::out;
 		ofstream o(m_filename);
 		for (int i = 0; i < m_noOfProducts; i++) {
 			m_products[i]->write(o, write_condensed);
@@ -199,7 +203,7 @@ namespace ama {
 			}
 			saveProductRecords();
 			cout << "\nUpdated!\n";
-			cin.ignore(2000, '\n'); //NOT SURE
+			cin.ignore(2000, '\n');
 		}
 	}
 	void AmaApp::addProduct(char tag) {
@@ -213,6 +217,7 @@ namespace ama {
 				cin.clear();
 				std::cin.ignore(2000, '\n');
 				cout << endl << *m_products[m_noOfProducts - 1] << endl << endl;
+				m_noOfProducts--;
 			}
 			else {
 				saveProductRecords();

@@ -23,5 +23,5 @@ int main()
 {
 	ama::AmaApp theApp("inventory.txt");
 	theApp.run();
-	return 0;
+ 	return 0;
 }

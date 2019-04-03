@@ -31,6 +31,7 @@ namespace ama {
 			errorState.message(nullptr);
 		}
 		else {
+			errorState.message(nullptr);
 			int len = strlen(name_n);
 			currentName = new char[len + 1];
 			strncpy(currentName, name_n, len);
@@ -181,7 +182,7 @@ namespace ama {
 				}
 				if (check) {
 					std::cout.width(max_length_label);
-					std::cout << "Quantity on Hand: ";
+					std::cout << "Quantity on hand: ";
 					std::cin >> qtyAvail_n;
 					std::cin.ignore(2000, '\n');
 					if (in.fail() || qtyAvail_n < 1) {

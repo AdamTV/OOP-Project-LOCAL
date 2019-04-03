@@ -124,6 +124,7 @@
     <ClInclude Include="..\iProduct.h" />
     <ClInclude Include="..\Perishable.h" />
     <ClInclude Include="..\Product.h" />
+    <ClInclude Include="..\Sort.h" />
     <ClInclude Include="..\Utilities.h" />
   </ItemGroup>
   <ItemGroup>
