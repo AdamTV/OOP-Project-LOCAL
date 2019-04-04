@@ -26,6 +26,7 @@ namespace ama {
 		void saveProductRecords();
 		void listProducts();
 		void deleteProductRecord(iProduct* product);
+		void sort();
 		iProduct* find(const char* sku) const;
 		void addQty(iProduct* product);
 		void addProduct(char tag);

@@ -21,9 +21,10 @@ namespace ama {
 		virtual int qtyAvailable() const = 0;
 		virtual const char* name() const = 0;
 		virtual int operator+=(int qty) = 0;
-		virtual bool operator>(const iProduct& other) const = 0;
+		virtual bool operator>(const iProduct&)const = 0;
 		virtual ~iProduct() = default;
 	};
+
 }
 
 #endif

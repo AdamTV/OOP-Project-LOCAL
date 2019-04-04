@@ -89,7 +89,7 @@ namespace ama {
 	}
 	bool Product::operator>(const iProduct &src) const {
 		bool greater = false;
-		int check = strncmp(currentName, src.name(), max_length_name);
+		int check = strncmp(name(), src.name(), max_length_name);
 		if (check > 0)
 			greater = true;
 		return greater;

@@ -80,8 +80,25 @@ namespace ama {
 				}
 				cout << endl;
 				break;
+			case 6:
+				char tpSKU[max_length_sku + 1];
+				cout << "Please enter the product SKU: ";
+				cin >> tpSKU;
+				cout << endl;
+				std::cin.ignore(2000, '\n');
+				tmp = find(tpSKU);
+				if (tmp != nullptr) {
+					deleteProductRecord(tmp);
+					loadProductRecords();
+					cout << "Deleted!";
+				}
+				else {
+					cout << "No such product!\n";
+				}
+				cout << endl;
+				break;
 			case 7:
-				sict::sort((m_products), m_noOfProducts);
+ 				sort();
 				saveProductRecords();
 				cout << "Sorted!\n\n";
 				break;
@@ -128,11 +145,11 @@ namespace ama {
 			}
 		}
 		m_noOfProducts = 0;
-		ifstream fin("inventory.txt");
+		ifstream fin(m_filename);
 		if (fin.is_open()) {
 			for (i = 0; !fin.fail(); i++) {
-				//if(tag == 'p' || tag == 'P')	FOR MATRIX
-					//fin.ignore(2000,'\n');
+				//if(tag == 'p' || tag == 'P')	
+				//	fin.ignore(2000,'\n');
 				fin.get(tag);
 				if (createInstance(tag) != nullptr) {
 					fin.ignore();
@@ -169,7 +186,25 @@ namespace ama {
 		cout.unsetf(ios::fixed);
 	}
 	void AmaApp::deleteProductRecord(iProduct* product) {
-
+		ofstream o(m_filename);
+		for (int i = 0; i < m_noOfProducts; i++) {
+			if (m_products[i] != product) {
+				m_products[i]->write(o, write_condensed);
+				o << endl;
+			}
+		}
+	}
+	void AmaApp::sort()
+	{
+		//Product p;
+		//cin >> p;
+		//bool x;
+		//char* pName[100];
+		// x = p > *m_products[1];
+		//pName = new char[m_noOfProducts];
+		//for (int i = 0; i < m_noOfProducts; i++)
+		//	pName[i] = const_cast<char*>(m_products[i]->name());
+		sict::sort(static_cast<iProduct*>(*m_products), m_noOfProducts);
 	}
 	iProduct* AmaApp::find(const char* sku) const {
 		iProduct* found = nullptr;
