@@ -8,25 +8,15 @@
 
 namespace sict {
 
-	template <class T, int N>
-	class Array {
-		T a[N];
-	public:
-		T& operator[](int i) { return a[i]; }
-	};
-
 	template <typename t>
-	void sort(t *a, size_t n) {
-		//Array<t*, 100> a;
-		//	for (size_t i = 0; i < n; i++)
-		//		a[i] = x[i];
+	void sort(t*a[], size_t n) {
 		size_t i, j, m;
-		t& temp = a[0];
+		t* temp;
 
 		for (i = 0; i < n; i++) {
 			m = i;
 			for (j = i + 1; j < n; j++)
-				if (a[m] > a[j]) {
+				if (*a[m] > *a[j]) {
 					m = j;
 				}
 			if (m != i) {

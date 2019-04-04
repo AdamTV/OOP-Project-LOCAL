@@ -148,8 +148,8 @@ namespace ama {
 		ifstream fin(m_filename);
 		if (fin.is_open()) {
 			for (i = 0; !fin.fail(); i++) {
-				//if(tag == 'p' || tag == 'P')	
-				//	fin.ignore(2000,'\n');
+				if(tag == 'P' || tag == 'p')	
+					fin.ignore(2000,'\n');
 				fin.get(tag);
 				if (createInstance(tag) != nullptr) {
 					fin.ignore();
@@ -196,15 +196,7 @@ namespace ama {
 	}
 	void AmaApp::sort()
 	{
-		//Product p;
-		//cin >> p;
-		//bool x;
-		//char* pName[100];
-		// x = p > *m_products[1];
-		//pName = new char[m_noOfProducts];
-		//for (int i = 0; i < m_noOfProducts; i++)
-		//	pName[i] = const_cast<char*>(m_products[i]->name());
-		sict::sort(static_cast<iProduct*>(*m_products), m_noOfProducts);
+		sict::sort((m_products), m_noOfProducts);
 	}
 	iProduct* AmaApp::find(const char* sku) const {
 		iProduct* found = nullptr;
